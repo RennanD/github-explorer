@@ -8,7 +8,7 @@ export const Title = styled.h1`
   color: #f0f0f5;
   line-height: 56px;
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 680px) {
     font-size: 36px;
   }
 `;
@@ -44,6 +44,76 @@ export const Form = styled.form`
 
     &:hover {
       background: ${shade(0.2, '#04d361')};
+    }
+  }
+`;
+
+export const Repositories = styled.div`
+  margin-top: 80px;
+  max-width: 700px;
+
+  a {
+    background: #222;
+    border-radius: 5px;
+    width: 100%;
+    padding: 24px;
+    display: block;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s;
+
+    & + a {
+      margin-top: 16px;
+    }
+
+    img {
+      height: 64px;
+      width: 64px;
+      border-radius: 50%;
+    }
+
+    div {
+      margin-left: 16px;
+
+      strong {
+        font-size: 20px;
+        color: #f0f0f5;
+      }
+
+      p {
+        font-size: 18px;
+        color: #666;
+        margin-top: 4px;
+      }
+    }
+
+    svg {
+      margin-left: auto;
+      color: #cbcbd6;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    @media screen and (max-width: 680px) {
+      padding: 15px;
+
+      img {
+        height: 50px;
+        width: 50px;
+      }
+
+      div {
+        strong {
+          font-size: 16px;
+        }
+
+        p {
+          font-size: 14px;
+        }
+      }
     }
   }
 `;
