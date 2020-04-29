@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 
 import { FiChevronRight } from 'react-icons/fi';
 
@@ -6,60 +6,66 @@ import { Title, Form, Repositories } from './styles';
 
 import logo from '../../assets/images/logo.svg';
 
-const Dashboard: React.FC = () => (
-  <>
-    <img src={logo} alt="Github Explorer" />
-    <Title>Explore repositórios no Github</Title>
+import api from '../../services/api';
 
-    <Form>
-      <input type="text" placeholder="Digite o nome do repositório" />
-      <button type="submit"> Pesquisar </button>
-    </Form>
+interface Repository {
+  full_name: string;
+  owner: {
+    login: string;
+    avatar_url: string;
+  };
+  description: string;
+}
 
-    <Repositories>
-      <a href="/teste">
-        <img
-          src="https://avatars1.githubusercontent.com/u/15038553?s=460&u=86c88160916f81df81c7c7c15b021a171d341771&v=4"
-          alt="Avatar"
+const Dashboard: React.FC = () => {
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [newRepo, setNewRepo] = useState('');
+
+  async function handleAddRepository(
+    e: FormEvent<HTMLFormElement>,
+  ): Promise<void> {
+    e.preventDefault();
+
+    const response = await api.get<Repository>(`/repos/${newRepo}`);
+
+    setRepositories([...repositories, response.data]);
+
+    setNewRepo('');
+  }
+
+  return (
+    <>
+      <img src={logo} alt="Github Explorer" />
+      <Title>Explore repositórios no Github</Title>
+
+      <Form onSubmit={handleAddRepository}>
+        <input
+          type="text"
+          value={newRepo}
+          onChange={(e) => setNewRepo(e.target.value)}
+          placeholder="Digite o nome do repositório"
         />
+        <button type="submit"> Pesquisar </button>
+      </Form>
 
-        <div>
-          <strong>rennand/fastfeet</strong>
-          <p>The main challenge Rocketseats GoStack.</p>
-        </div>
+      <Repositories>
+        {repositories.map((repository) => (
+          <a href="/teste" key={repository.full_name}>
+            <img
+              src={repository.owner.avatar_url}
+              alt={repository.owner.login}
+            />
 
-        <FiChevronRight size={20} />
-      </a>
+            <div>
+              <strong>{repository.full_name}</strong>
+              <p>{repository.description}</p>
+            </div>
 
-      <a href="/teste">
-        <img
-          src="https://avatars1.githubusercontent.com/u/15038553?s=460&u=86c88160916f81df81c7c7c15b021a171d341771&v=4"
-          alt="Avatar"
-        />
-
-        <div>
-          <strong>rennand/fastfeet</strong>
-          <p>The main challenge Rocketseats GoStack.</p>
-        </div>
-
-        <FiChevronRight size={20} />
-      </a>
-
-      <a href="/teste">
-        <img
-          src="https://avatars1.githubusercontent.com/u/15038553?s=460&u=86c88160916f81df81c7c7c15b021a171d341771&v=4"
-          alt="Avatar"
-        />
-
-        <div>
-          <strong>rennand/fastfeet</strong>
-          <p>The main challenge Rocketseats GoStack.</p>
-        </div>
-
-        <FiChevronRight size={20} />
-      </a>
-    </Repositories>
-  </>
-);
-
+            <FiChevronRight size={20} />
+          </a>
+        ))}
+      </Repositories>
+    </>
+  );
+};
 export default Dashboard;
