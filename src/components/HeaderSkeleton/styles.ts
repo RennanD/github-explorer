@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Skeleton from 'react-loading-skeleton';
 
 export const Container = styled.header`
   margin-top: 80px;

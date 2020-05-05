@@ -39,13 +39,10 @@ interface Issue {
 const Repository: React.FC = () => {
   const [repository, setRepository] = useState<Repository | null>(null);
   const [issues, setIssues] = useState<Issue[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const { params } = useRouteMatch<RepositoryParams>();
 
   useEffect(() => {
-    setLoading(true);
-
     api.get(`/repos/${params.name}`).then((response) => {
       setRepository(response.data);
     });
@@ -53,8 +50,6 @@ const Repository: React.FC = () => {
     api.get(`/repos/${params.name}/issues`).then((response) => {
       setIssues(response.data);
     });
-
-    setLoading(false);
   }, [params.name]);
 
   return (
