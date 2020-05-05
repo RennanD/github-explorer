@@ -5,6 +5,8 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import { Container, Header, RepositoryInfo, Issues } from './styles';
 
+import HeaderSkeleton from '../../components/HeaderSkeleton';
+
 import logoImg from '../../assets/images/logo.svg';
 
 import api from '../../services/api';
@@ -37,10 +39,13 @@ interface Issue {
 const Repository: React.FC = () => {
   const [repository, setRepository] = useState<Repository | null>(null);
   const [issues, setIssues] = useState<Issue[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { params } = useRouteMatch<RepositoryParams>();
 
   useEffect(() => {
+    setLoading(true);
+
     api.get(`/repos/${params.name}`).then((response) => {
       setRepository(response.data);
     });
@@ -48,6 +53,8 @@ const Repository: React.FC = () => {
     api.get(`/repos/${params.name}/issues`).then((response) => {
       setIssues(response.data);
     });
+
+    setLoading(false);
   }, [params.name]);
 
   return (
@@ -60,7 +67,7 @@ const Repository: React.FC = () => {
         </Link>
       </Header>
 
-      {repository && (
+      {repository ? (
         <RepositoryInfo>
           <header>
             <img
@@ -90,6 +97,8 @@ const Repository: React.FC = () => {
             </li>
           </ul>
         </RepositoryInfo>
+      ) : (
+        <HeaderSkeleton />
       )}
 
       <Issues>
