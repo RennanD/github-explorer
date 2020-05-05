@@ -24,7 +24,7 @@ $ git clone https://github.com/RennanD/github-explorer.git
 # 💻 Web Application
 
 <h1 align="center">
-    <img src ="./assets/browser.svg" width="200px" />
+    <img src ="./.github/browser.svg" width="200px" />
 </h1>
 
 ## ⚡️ Start
@@ -37,7 +37,7 @@ $ yarn start
 ```
 
 <h1 align="center">
-<img src ="./assets/github-explorer.gif" width="800px">
-<img src ="./assets/responsive-github.gif" width="300px">
-responsive-github
+<img src ="./.github/github-explorer.gif" width="800px">
+<img src ="./.github/responsive-github.gif" width="300px">
+
 </h1>
