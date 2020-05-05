@@ -36,8 +36,8 @@ $ yarn
 $ yarn start
 ```
 
-<h1 align="center">
-<img src ="./.github/github-explorer.gif" width="400px">
+<h1 >
+<img src ="./.github/github-explorer.gif" width="600px">
 <img src ="./.github/responsive-github.gif" width="300px">
 
 </h1>
